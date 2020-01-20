@@ -1,8 +1,5 @@
 package com.it.app.dto.response;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-
 public class MedicamentResponseDto {
 
     private Long id;

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "patients")
+@Table(name = "PATIENTS")
 public class Patient {
 
     @Id

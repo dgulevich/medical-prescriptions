@@ -10,8 +10,6 @@ import com.it.app.service.PrescriptionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Date;
 import java.util.List;
 
@@ -72,9 +70,10 @@ public class PrescriptionsServiceImpl implements PrescriptionService {
         prescriptionRepository.deleteById(id);
     }
 
-    public void sale(Prescription prescription) {
+    public void use(Prescription prescription) {
         validation.validate(isPrescriptionExpired(prescription), "The prescription is not valid");
         prescription.setUse(true);
+        update(prescription);
     }
 
     private Prescription saveAndFlush(Prescription prescription) {

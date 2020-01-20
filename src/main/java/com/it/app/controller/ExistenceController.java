@@ -29,15 +29,6 @@ public class ExistenceController {
         this.existenceService = existenceService;
     }
 
-/*    @GetMapping
-    public ResponseEntity<List<ExistenceResponseDto>> getAll() {
-        final List<Existence> existences = existenceService.findAll();
-        final List<ExistenceResponseDto> existenceResponseDtoList = existences.stream()
-                .map((existence) -> mapper.map(existence, ExistenceResponseDto.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(existenceResponseDtoList, HttpStatus.OK);
-    }*/
-
     @GetMapping("/{id}")
     public ResponseEntity<ExistenceResponseDto> getOne(@PathVariable Long id) {
         final Existence existence = existenceService.findById(id);
@@ -46,7 +37,6 @@ public class ExistenceController {
     }
 
     @GetMapping
-    @ResponseBody
     public ResponseEntity<List<ExistenceResponseDto>> getAny(@RequestParam(required = false, defaultValue = "0") Long pharmacyId,
                                                              @RequestParam(required = false, defaultValue = "0") Long medicamentId) {
         final List<Existence> existences;

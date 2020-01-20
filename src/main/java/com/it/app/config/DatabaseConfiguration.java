@@ -1,10 +1,13 @@
 package com.it.app.config;
 
+import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 @PropertySource("classpath:database.properties")
@@ -35,18 +39,27 @@ public class DatabaseConfiguration {
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        return builder.setType(EmbeddedDatabaseType.H2).addScript("schema.sql").addScript("data.sql").build();
+
+/*        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName(driverClass);
         driverManagerDataSource.setUrl(url);
         driverManagerDataSource.setUsername(username);
-        driverManagerDataSource.setPassword(password);
+        driverManagerDataSource.setPassword(password);*/
 
 /*        //for fill database
-        Resource resource = new ClassPathResource("db.sql");
+        Resource resource = new ClassPathResource("data.sql");
         DatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
         DatabasePopulatorUtils.execute(databasePopulator, driverManagerDataSource);*/
 
-        return driverManagerDataSource;
+       // return driverManagerDataSource;
+    }
+
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public Server h2Server() throws SQLException {
+        return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     }
 
     @Bean
@@ -69,9 +82,9 @@ public class DatabaseConfiguration {
 
     private Properties additionalProrerties() {
         Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto","update");
+        properties.setProperty("hibernate.hbm2ddl.auto","create-drop");
         properties.setProperty("hibernate.show_sql","true");
-        properties.setProperty("hibernate.dialect","org.hibernate.dialect.PostgreSQL94Dialect");
+        properties.setProperty("hibernate.dialect","org.hibernate.dialect.H2Dialect");
         return properties;
     }
 }

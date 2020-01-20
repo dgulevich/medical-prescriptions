@@ -27,15 +27,6 @@ public class MedicamentController {
         this.medicamentService = medicamentService;
     }
 
-/*    @GetMapping
-    public ResponseEntity<List<MedicamentResponseDto>> getAll() {
-        final List<Medicament> medicaments = medicamentService.findAll();
-        final List<MedicamentResponseDto> medicamentResponseDtoList = medicaments.stream()
-                .map((medicament) -> mapper.map(medicament, MedicamentResponseDto.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(medicamentResponseDtoList, HttpStatus.OK);
-    }*/
-
     @GetMapping("/{id}")
     public ResponseEntity<MedicamentResponseDto> getOne(@PathVariable Long id) {
         final Medicament medicament = medicamentService.findById(id);
@@ -43,28 +34,7 @@ public class MedicamentController {
         return new ResponseEntity<>(medicamentResponseDto, HttpStatus.OK);
     }
 
-/*    @GetMapping(params = {"name"})
-    @ResponseBody
-    public ResponseEntity<List<MedicamentResponseDto>> getAnyByName(@RequestParam("name") String name) {
-        final List<Medicament> medicaments = medicamentService.findByName(name);
-        final List<MedicamentResponseDto> medicamentResponseDtoList = medicaments.stream()
-                .map((medicament) -> mapper.map(medicament, MedicamentResponseDto.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(medicamentResponseDtoList, HttpStatus.OK);
-    }
-
-    @GetMapping(params = {"type"})
-    @ResponseBody
-    public ResponseEntity<List<MedicamentResponseDto>> getAnyByType(@RequestParam("type") String type) {
-        final List<Medicament> medicaments = medicamentService.findByType(type);
-        final List<MedicamentResponseDto> medicamentResponseDtoList = medicaments.stream()
-                .map((medicament) -> mapper.map(medicament, MedicamentResponseDto.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(medicamentResponseDtoList, HttpStatus.OK);
-    }*/
-
     @GetMapping
-    @ResponseBody
     public ResponseEntity<List<MedicamentResponseDto>> getAny(@RequestParam(value = "name", required = false, defaultValue = "%") String name,
                                                               @RequestParam(value = "type", required = false, defaultValue = "%") String type) {
         final List<Medicament> medicaments;

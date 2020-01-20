@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "institutions")
+@Table(name = "INSTITUTIONS")
 public class Institution {
 
     @Id
@@ -21,7 +21,7 @@ public class Institution {
     @Column(unique = true, nullable = false)
     @NotNull(message = "{institution.name.notNull}")
     @NotEmpty(message = "{institution.name.notEmpty}")
-    @Size(min = 3, max = 50, message = "{institution.name.size}")
+    @Size(min = 3, max = 255, message = "{institution.name.size}")
     private String name;
 
     @NotNull(message = "{institution.type.notNull}")

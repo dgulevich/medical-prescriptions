@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "ORDERS")
 public class Order {
 
     @Id
@@ -20,7 +20,7 @@ public class Order {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "medicaments_id", nullable = false)
+    @JoinColumn(name = "medicament_id", nullable = false)
     @NotNull(message = "{order.medicament.notNull}")
     private Medicament medicament;
 

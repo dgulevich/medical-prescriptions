@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User {
 
     @Id
@@ -26,7 +26,7 @@ public class User {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role",
+    @JoinTable(name = "USER_ROLE",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     @NotNull(message = "{user.roles.notNull}")

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Table(name = "doctors")
+@Table(name = "DOCTORS")
 public class Doctor {
 
     @Id
@@ -26,7 +26,7 @@ public class Doctor {
     private String specialization;
 
     @ManyToOne
-    @JoinColumn(name = "institutions_id", nullable = false)
+    @JoinColumn(name = "institution_id", nullable = false)
     @NotNull(message = "{doctor.institution.notNull}")
     private Institution institution;
 

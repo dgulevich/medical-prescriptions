@@ -3,11 +3,10 @@ package com.it.app.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
-@Table(name = "prescriptions", uniqueConstraints = @UniqueConstraint(columnNames = "orders_id"))
+@Table(name = "PRESCRIPTIONS", uniqueConstraints = @UniqueConstraint(columnNames = "order_id"))
 public class Prescription {
 
     @Id
@@ -27,15 +26,15 @@ public class Prescription {
     private Date date;
 
     @OneToOne
-    @JoinColumn(name = "orders_id", unique = true)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "patients_id")
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "doctors_id")
+    @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
     public Order getOrder() {

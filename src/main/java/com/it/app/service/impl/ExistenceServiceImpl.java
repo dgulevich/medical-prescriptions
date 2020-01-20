@@ -6,6 +6,7 @@ import com.it.app.repository.ExistenceRepository;
 import com.it.app.service.ExistenceService;
 import com.it.app.service.MedicamentService;
 import com.it.app.service.PharmacyService;
+import com.it.app.service.PrescriptionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,8 @@ public class ExistenceServiceImpl implements ExistenceService {
     private PharmacyService pharmacyService;
 
     private MedicamentService medicamentService;
+
+    private PrescriptionService prescriptionService;
 
     private Validation validation;
 
@@ -72,6 +75,12 @@ public class ExistenceServiceImpl implements ExistenceService {
     public void deleteById(Long id) {
         findById(id);
         existenceRepository.deleteById(id);
+    }
+
+    public Existence sale(Existence existence, Integer volume) {
+        Integer count = (volume % existence.getVolume()) > 0 ? (volume / existence.getVolume() + 1) : volume / existence.getVolume();
+        existence.setCount(existence.getCount() - count);
+        return update(existence);
     }
 
     private Existence saveAndFlush(Existence existence) {

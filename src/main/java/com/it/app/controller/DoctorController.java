@@ -32,15 +32,6 @@ public class DoctorController {
         this.institutionService = institutionService;
     }
 
-/*    @GetMapping
-    public ResponseEntity<List<DoctorResponseDto>> getAll() {
-        final List<Doctor> doctors = doctorService.findAll();
-        final List<DoctorResponseDto> doctorResponseDtoList = doctors.stream()
-                .map((doctor) -> mapper.map(doctor, DoctorResponseDto.class))
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(doctorResponseDtoList, HttpStatus.OK);
-    }*/
-
     @GetMapping("/{id}")
     public ResponseEntity<DoctorResponseDto> getOne(@PathVariable Long id) {
         final Doctor doctor = doctorService.findById(id);
@@ -49,7 +40,6 @@ public class DoctorController {
     }
 
     @GetMapping
-    @ResponseBody
     public ResponseEntity<List<DoctorResponseDto>> findAny(@RequestParam(required = false, defaultValue = "0") Long institutionId,
                                                            @RequestParam(required = false, defaultValue = "%") String specialization) {
         final List<Doctor> doctors;

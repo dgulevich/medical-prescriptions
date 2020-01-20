@@ -17,6 +17,4 @@ public interface PrescriptionService {
     void delete(Prescription prescription);
 
     void deleteById(Long id);
-
-    void sale(Prescription prescription);
 }

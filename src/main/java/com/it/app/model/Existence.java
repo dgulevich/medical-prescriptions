@@ -5,7 +5,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "existences")
+@Table(name = "EXISTENCES")
 public class Existence {
 
     @Id
@@ -13,12 +13,12 @@ public class Existence {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "medicaments_id", nullable = false)
+    @JoinColumn(name = "medicament_id", nullable = false)
     @NotNull(message = "{existence.medicament.notNull}")
     private Medicament medicament;
 
     @ManyToOne
-    @JoinColumn(name = "pharmacies_id", nullable = false)
+    @JoinColumn(name = "pharmacy_id", nullable = false)
     @NotNull(message = "existence.pharmacy.notNull")
     private Pharmacy pharmacy;
 

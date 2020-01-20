@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "ROLES")
 public class Role {
 
     @Id

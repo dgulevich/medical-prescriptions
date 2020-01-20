@@ -2,14 +2,11 @@ package com.it.app.controller;
 
 import com.it.app.dto.request.InstitutionRequestDto;
 import com.it.app.dto.response.InstitutionResponseDto;
-import com.it.app.model.Doctor;
 import com.it.app.model.Institution;
 import com.it.app.service.InstitutionService;
 import org.dozer.Mapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

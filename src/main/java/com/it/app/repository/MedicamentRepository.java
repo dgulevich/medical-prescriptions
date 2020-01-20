@@ -12,8 +12,6 @@ public interface MedicamentRepository extends JpaRepository<Medicament, Long> {
 
     List<Medicament> findByTypeIgnoreCase(String type);
 
-    List<Medicament> findByNameIgnoreCaseAndTypeIgnoreCase(String name, String type);
-
     List<Medicament> findByNameLikeIgnoreCaseAndTypeLikeIgnoreCase(String name, String type);
 
 }

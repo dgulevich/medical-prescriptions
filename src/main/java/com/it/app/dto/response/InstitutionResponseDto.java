@@ -14,16 +14,6 @@ public class InstitutionResponseDto {
 
     private String address;
 
-/*    private List<DoctorResponseDto> doctors;
-
-    public List<DoctorResponseDto> getDoctors() {
-        return doctors;
-    }
-
-    public void setDoctors(List<DoctorResponseDto> doctors) {
-        this.doctors = doctors;
-    }*/
-
     public Long getId() {
         return id;
     }
