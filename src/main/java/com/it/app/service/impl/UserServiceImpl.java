@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type User service.
+ */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -21,6 +24,12 @@ public class UserServiceImpl implements UserService {
 
     private Validation validation;
 
+    /**
+     * Instantiates a new User service.
+     *
+     * @param userRepository the user repository
+     * @param validation     the validation
+     */
     public UserServiceImpl(UserRepository userRepository, Validation validation) {
         this.userRepository = userRepository;
         this.validation = validation;

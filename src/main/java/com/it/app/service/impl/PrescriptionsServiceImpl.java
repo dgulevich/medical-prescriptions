@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The type Prescriptions service.
+ */
 @Service
 @Transactional
 public class PrescriptionsServiceImpl implements PrescriptionService {
@@ -27,6 +30,15 @@ public class PrescriptionsServiceImpl implements PrescriptionService {
 
     private Validation validation;
 
+    /**
+     * Instantiates a new Prescriptions service.
+     *
+     * @param prescriptionRepository the prescription repository
+     * @param doctorService          the doctor service
+     * @param patientService         the patient service
+     * @param orderService           the order service
+     * @param validation             the validation
+     */
     public PrescriptionsServiceImpl(PrescriptionRepository prescriptionRepository, DoctorService doctorService, PatientService patientService, OrderService orderService, Validation validation) {
         this.prescriptionRepository = prescriptionRepository;
         this.doctorService = doctorService;
@@ -47,7 +59,6 @@ public class PrescriptionsServiceImpl implements PrescriptionService {
         final Long id = prescription.getId();
         validation.validate(id != null, "Transient Prescription must not have an ID");
         prescription.setUse(false);
-        prescription.setDate(new Date());
         return saveAndFlush(prescription);
     }
 
@@ -70,6 +81,11 @@ public class PrescriptionsServiceImpl implements PrescriptionService {
         prescriptionRepository.deleteById(id);
     }
 
+    /**
+     * Use.
+     *
+     * @param prescription the prescription
+     */
     public void use(Prescription prescription) {
         validation.validate(isPrescriptionExpired(prescription), "The prescription is not valid");
         prescription.setUse(true);
@@ -83,6 +99,7 @@ public class PrescriptionsServiceImpl implements PrescriptionService {
         prescription.setDoctor(doctorService.findById(prescription.getDoctor().getId()));
         prescription.setPatient(patientService.findById(prescription.getPatient().getId()));
         prescription.setOrder(orderService.findById(prescription.getOrder().getId()));
+        prescription.setDate(new Date());
         return prescriptionRepository.saveAndFlush(prescription);
     }
 

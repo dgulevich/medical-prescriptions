@@ -20,6 +20,9 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * The type Database configuration.
+ */
 @PropertySource("classpath:database.properties")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.it.app.repository")
@@ -37,31 +40,33 @@ public class DatabaseConfiguration {
     @Value("${connection.password}")
     private String password;
 
+    /**
+     * Data source data source.
+     *
+     * @return the data source
+     */
     @Bean
     public DataSource dataSource() {
-
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.H2).addScript("schema.sql").addScript("data.sql").build();
-
-/*        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-        driverManagerDataSource.setDriverClassName(driverClass);
-        driverManagerDataSource.setUrl(url);
-        driverManagerDataSource.setUsername(username);
-        driverManagerDataSource.setPassword(password);*/
-
-/*        //for fill database
-        Resource resource = new ClassPathResource("data.sql");
-        DatabasePopulator databasePopulator = new ResourceDatabasePopulator(resource);
-        DatabasePopulatorUtils.execute(databasePopulator, driverManagerDataSource);*/
-
-       // return driverManagerDataSource;
     }
 
+    /**
+     * H 2 server server.
+     *
+     * @return the server
+     * @throws SQLException the sql exception
+     */
     @Bean(initMethod = "start", destroyMethod = "stop")
     public Server h2Server() throws SQLException {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092");
     }
 
+    /**
+     * Entity manager factory local container entity manager factory bean.
+     *
+     * @return the local container entity manager factory bean
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -73,6 +78,12 @@ public class DatabaseConfiguration {
         return localContainerEntityManagerFactoryBean;
     }
 
+    /**
+     * Transaction manager platform transaction manager.
+     *
+     * @param entityManagerFactory the entity manager factory
+     * @return the platform transaction manager
+     */
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager = new JpaTransactionManager();

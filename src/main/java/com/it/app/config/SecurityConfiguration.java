@@ -3,6 +3,7 @@ package com.it.app.config;
 import com.it.app.security.filter.AuthenticationTokenFilter;
 import com.it.app.service.security.TokenSecurityService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +13,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * The type Security configuration.
+ */
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -19,6 +23,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final TokenSecurityService tokenSecurityService;
 
+    /**
+     * Instantiates a new Security configuration.
+     *
+     * @param userDetailsService   the user details service
+     * @param tokenSecurityService the token security service
+     */
     public SecurityConfiguration(UserDetailsService userDetailsService, TokenSecurityService tokenSecurityService) {
         this.userDetailsService = userDetailsService;
         this.tokenSecurityService = tokenSecurityService;
@@ -34,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .mvcMatchers("/**").permitAll();
+                .mvcMatchers("/authentication/**").permitAll();
 
         final AuthenticationTokenFilter filter = new AuthenticationTokenFilter(tokenSecurityService, userDetailsService);
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * The type Prescription controller.
+ */
 @RestController
 @RequestMapping("/prescriptions")
 public class PrescriptionController {
@@ -24,11 +27,22 @@ public class PrescriptionController {
 
     private Mapper mapper;
 
+    /**
+     * Instantiates a new Prescription controller.
+     *
+     * @param prescriptionService the prescription service
+     * @param mapper              the mapper
+     */
     public PrescriptionController(PrescriptionService prescriptionService, Mapper mapper) {
         this.prescriptionService = prescriptionService;
         this.mapper = mapper;
     }
 
+    /**
+     * Gets all.
+     *
+     * @return the all
+     */
     @GetMapping
     public ResponseEntity<List<PrescriptionResponseDto>> getAll() {
         final List<Prescription> prescriptions = prescriptionService.findAll();
@@ -38,6 +52,12 @@ public class PrescriptionController {
         return new ResponseEntity<>(prescriptionResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Gets one.
+     *
+     * @param id the id
+     * @return the one
+     */
     @GetMapping("/{id}")
     public ResponseEntity<PrescriptionResponseDto> getOne(@PathVariable Long id) {
         final Prescription prescription = prescriptionService.findById(id);
@@ -45,6 +65,12 @@ public class PrescriptionController {
         return new ResponseEntity<>(prescriptionResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Save response entity.
+     *
+     * @param prescriptionRequestDto the prescription request dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<PrescriptionResponseDto> save(@RequestBody PrescriptionRequestDto prescriptionRequestDto) {
         prescriptionRequestDto.setId(null);
@@ -53,6 +79,13 @@ public class PrescriptionController {
         return new ResponseEntity<>(prescriptionResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Update response entity.
+     *
+     * @param prescriptionRequestDto the prescription request dto
+     * @param id                     the id
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<PrescriptionResponseDto> update(@RequestBody PrescriptionRequestDto prescriptionRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, prescriptionRequestDto.getId())) throw new RuntimeException("Url param id is not equals to prescriptionId!");
@@ -61,6 +94,11 @@ public class PrescriptionController {
         return new ResponseEntity<>(prescriptionResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id) {

@@ -22,6 +22,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The type Authentication controller.
+ */
 @RestController
 @RequestMapping("/authentication")
 public class AuthenticationController {
@@ -36,6 +39,15 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
 
+    /**
+     * Instantiates a new Authentication controller.
+     *
+     * @param userService           the user service
+     * @param roleService           the role service
+     * @param tokenSecurityService  the token security service
+     * @param encoder               the encoder
+     * @param authenticationManager the authentication manager
+     */
     public AuthenticationController(UserService userService, RoleService roleService, TokenSecurityService tokenSecurityService, PasswordEncoder encoder, AuthenticationManager authenticationManager) {
         this.userService = userService;
         this.roleService = roleService;
@@ -44,6 +56,12 @@ public class AuthenticationController {
         this.authenticationManager = authenticationManager;
     }
 
+    /**
+     * Authenticate user token response dto.
+     *
+     * @param requestDto the request dto
+     * @return the token response dto
+     */
     @PostMapping("/signIn")
     public TokenResponseDto authenticateUser(@RequestBody UserRegistrationRequestDto requestDto) {
         UsernamePasswordAuthenticationToken token =
@@ -53,11 +71,23 @@ public class AuthenticationController {
         return new TokenResponseDto(tokenSecurityService.generate(authentication));
     }
 
+    /**
+     * Refresh token token response dto.
+     *
+     * @param token the token
+     * @return the token response dto
+     */
     @PostMapping("/refresh")
     public TokenResponseDto refreshToken(@RequestBody String token) {
         return new TokenResponseDto(tokenSecurityService.refresh(token));
     }
 
+    /**
+     * Register user user.
+     *
+     * @param userRegistrationRequestDto the user registration request dto
+     * @return the user
+     */
     @PostMapping("/signUp")
     public User registerUser(@RequestBody UserRegistrationRequestDto userRegistrationRequestDto) {
         final User user = new User();
@@ -67,10 +97,10 @@ public class AuthenticationController {
                 .map(roleService::findByName)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
-
         Set<Role> role1 = new HashSet<>();
         role1.add(roleService.findByName("ROLE_USER"));
         user.setRoles(role1);
+        user.setRoles(roles);
         return userService.save(user);
     }
 }

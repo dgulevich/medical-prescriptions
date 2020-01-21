@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * The type Doctor service.
+ */
 @Service
 @Transactional
 public class DoctorServiceImpl implements DoctorService {
@@ -20,6 +23,13 @@ public class DoctorServiceImpl implements DoctorService {
 
     private InstitutionService institutionService;
 
+    /**
+     * Instantiates a new Doctor service.
+     *
+     * @param validation         the validation
+     * @param doctorRepository   the doctor repository
+     * @param institutionService the institution service
+     */
     public DoctorServiceImpl(Validation validation, DoctorRepository doctorRepository, InstitutionService institutionService) {
         this.validation = validation;
         this.doctorRepository = doctorRepository;

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * The type Medicament controller.
+ */
 @RestController
 @RequestMapping("/medicaments")
 public class MedicamentController {
@@ -22,11 +25,23 @@ public class MedicamentController {
 
     private MedicamentService medicamentService;
 
+    /**
+     * Instantiates a new Medicament controller.
+     *
+     * @param mapper            the mapper
+     * @param medicamentService the medicament service
+     */
     public MedicamentController(Mapper mapper, MedicamentService medicamentService) {
         this.mapper = mapper;
         this.medicamentService = medicamentService;
     }
 
+    /**
+     * Gets one.
+     *
+     * @param id the id
+     * @return the one
+     */
     @GetMapping("/{id}")
     public ResponseEntity<MedicamentResponseDto> getOne(@PathVariable Long id) {
         final Medicament medicament = medicamentService.findById(id);
@@ -34,6 +49,13 @@ public class MedicamentController {
         return new ResponseEntity<>(medicamentResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Gets any.
+     *
+     * @param name the name
+     * @param type the type
+     * @return the any
+     */
     @GetMapping
     public ResponseEntity<List<MedicamentResponseDto>> getAny(@RequestParam(value = "name", required = false, defaultValue = "%") String name,
                                                               @RequestParam(value = "type", required = false, defaultValue = "%") String type) {
@@ -51,6 +73,12 @@ public class MedicamentController {
         return new ResponseEntity<>(medicamentResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Save response entity.
+     *
+     * @param medicamentRequestDto the medicament request dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<MedicamentResponseDto> save(@Valid @RequestBody MedicamentRequestDto medicamentRequestDto) {
         final Medicament medicament = mapper.map(medicamentRequestDto, Medicament.class);
@@ -58,6 +86,13 @@ public class MedicamentController {
         return new ResponseEntity<>(medicamentResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Update response entity.
+     *
+     * @param medicamentRequestDto the medicament request dto
+     * @param id                   the id
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<MedicamentResponseDto> update(@Valid @RequestBody MedicamentRequestDto medicamentRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, medicamentRequestDto.getId())) throw new RuntimeException("Url param id is not equals to medicamentId!");
@@ -66,6 +101,11 @@ public class MedicamentController {
         return new ResponseEntity<>(medicamentResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id) {

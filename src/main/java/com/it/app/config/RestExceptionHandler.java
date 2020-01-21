@@ -15,6 +15,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolationException;
 
+/**
+ * The type Rest exception handler.
+ */
 @ControllerAdvice(annotations = RestController.class)
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
@@ -31,6 +34,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(errorResponseDTO, HttpStatus.BAD_REQUEST);
     }
 
+    /**
+     * Handle constraint violation exception response entity.
+     *
+     * @param exception the exception
+     * @param request   the request
+     * @return the response entity
+     */
     @ExceptionHandler(value = {ConstraintViolationException.class})
     protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception, WebRequest request) {
         LOGGER.error(exception.getMessage(), exception);
@@ -41,6 +51,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(exception, errorResponseDTO, new HttpHeaders(), errorResponseDTO.getHttpStatus(), request);
     }
 
+    /**
+     * Handle runtime exception response entity.
+     *
+     * @param exception the exception
+     * @param request   the request
+     * @return the response entity
+     */
     @ExceptionHandler(value = {RuntimeException.class})
     protected ResponseEntity<Object> handleRuntimeException(RuntimeException exception, WebRequest request) {
         LOGGER.error(exception.getMessage(), exception);

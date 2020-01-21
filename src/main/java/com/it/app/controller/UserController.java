@@ -16,6 +16,9 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The type User controller.
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,11 +27,22 @@ public class UserController {
 
     private UserService userService;
 
+    /**
+     * Instantiates a new User controller.
+     *
+     * @param mapper      the mapper
+     * @param userService the user service
+     */
     public UserController(Mapper mapper, UserService userService) {
         this.mapper = mapper;
         this.userService = userService;
     }
 
+    /**
+     * Gets all.
+     *
+     * @return the all
+     */
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> getAll() {
         final List<User> users = userService.findAll();
@@ -38,12 +52,24 @@ public class UserController {
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Gets one.
+     *
+     * @param id the id
+     * @return the one
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> getOne(@PathVariable Long id) {
         final UserResponseDto userResponseDto = mapper.map(userService.findById(id), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Save response entity.
+     *
+     * @param userRequestDto the user request dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto userRequestDto) {
         userRequestDto.setId(null);
@@ -51,6 +77,13 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Update response entity.
+     *
+     * @param userRequestDto the user request dto
+     * @param id             the id
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<UserResponseDto> update(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, userRequestDto.getId())) {
@@ -60,6 +93,11 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id) {

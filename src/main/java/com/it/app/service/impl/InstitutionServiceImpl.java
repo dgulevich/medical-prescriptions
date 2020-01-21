@@ -14,6 +14,9 @@ import javax.print.Doc;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Institution service.
+ */
 @Service
 @Transactional
 public class InstitutionServiceImpl implements InstitutionService {
@@ -24,6 +27,12 @@ public class InstitutionServiceImpl implements InstitutionService {
 
     private Validation validation;
 
+    /**
+     * Instantiates a new Institution service.
+     *
+     * @param institutionRepository the institution repository
+     * @param validation            the validation
+     */
     public InstitutionServiceImpl(InstitutionRepository institutionRepository, Validation validation) {
         this.institutionRepository = institutionRepository;
         this.validation = validation;

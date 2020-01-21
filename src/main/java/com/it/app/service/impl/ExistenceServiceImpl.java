@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * The type Existence service.
+ */
 @Service
 @Transactional
 public class ExistenceServiceImpl implements ExistenceService {
@@ -26,6 +29,14 @@ public class ExistenceServiceImpl implements ExistenceService {
 
     private Validation validation;
 
+    /**
+     * Instantiates a new Existence service.
+     *
+     * @param existenceRepository the existence repository
+     * @param pharmacyService     the pharmacy service
+     * @param medicamentService   the medicament service
+     * @param validation          the validation
+     */
     public ExistenceServiceImpl(ExistenceRepository existenceRepository, PharmacyService pharmacyService, MedicamentService medicamentService, Validation validation) {
         this.existenceRepository = existenceRepository;
         this.pharmacyService = pharmacyService;
@@ -77,6 +88,13 @@ public class ExistenceServiceImpl implements ExistenceService {
         existenceRepository.deleteById(id);
     }
 
+    /**
+     * Sale existence.
+     *
+     * @param existence the existence
+     * @param volume    the volume
+     * @return the existence
+     */
     public Existence sale(Existence existence, Integer volume) {
         Integer count = (volume % existence.getVolume()) > 0 ? (volume / existence.getVolume() + 1) : volume / existence.getVolume();
         existence.setCount(existence.getCount() - count);

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+/**
+ * The type Token security service.
+ */
 @Service
 public class TokenSecurityServiceImpl implements TokenSecurityService {
 

@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * The type Role service.
+ */
 @Service
 @Transactional
 public class RoleServiceImpl implements RoleService {
@@ -18,6 +21,12 @@ public class RoleServiceImpl implements RoleService {
 
     private Validation validation;
 
+    /**
+     * Instantiates a new Role service.
+     *
+     * @param roleRepository the role repository
+     * @param validation     the validation
+     */
     public RoleServiceImpl(RoleRepository roleRepository, Validation validation) {
         this.roleRepository = roleRepository;
         this.validation = validation;

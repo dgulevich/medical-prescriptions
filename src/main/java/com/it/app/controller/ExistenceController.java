@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * The type Existence controller.
+ */
 @RestController
 @RequestMapping("/existences")
 public class ExistenceController {
@@ -24,11 +27,23 @@ public class ExistenceController {
 
     private ExistenceService existenceService;
 
+    /**
+     * Instantiates a new Existence controller.
+     *
+     * @param mapper           the mapper
+     * @param existenceService the existence service
+     */
     public ExistenceController(Mapper mapper, ExistenceService existenceService) {
         this.mapper = mapper;
         this.existenceService = existenceService;
     }
 
+    /**
+     * Gets one.
+     *
+     * @param id the id
+     * @return the one
+     */
     @GetMapping("/{id}")
     public ResponseEntity<ExistenceResponseDto> getOne(@PathVariable Long id) {
         final Existence existence = existenceService.findById(id);
@@ -36,6 +51,13 @@ public class ExistenceController {
         return new ResponseEntity<>(existenceResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Gets any.
+     *
+     * @param pharmacyId   the pharmacy id
+     * @param medicamentId the medicament id
+     * @return the any
+     */
     @GetMapping
     public ResponseEntity<List<ExistenceResponseDto>> getAny(@RequestParam(required = false, defaultValue = "0") Long pharmacyId,
                                                              @RequestParam(required = false, defaultValue = "0") Long medicamentId) {
@@ -54,6 +76,12 @@ public class ExistenceController {
         return new ResponseEntity<>(existenceResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Save response entity.
+     *
+     * @param existenceRequestDto the existence request dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<ExistenceResponseDto> save(@Valid @RequestBody ExistenceRequestDto existenceRequestDto) {
         existenceRequestDto.setId(null);
@@ -62,6 +90,13 @@ public class ExistenceController {
         return new ResponseEntity<>(existenceResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Update response entity.
+     *
+     * @param existenceRequestDto the existence request dto
+     * @param id                  the id
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<ExistenceResponseDto> update(@Valid @RequestBody ExistenceRequestDto existenceRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, existenceRequestDto.getId())) throw new RuntimeException("Url param id is not equals to existenceId!");
@@ -70,6 +105,11 @@ public class ExistenceController {
         return new ResponseEntity<>(existenceResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id) {

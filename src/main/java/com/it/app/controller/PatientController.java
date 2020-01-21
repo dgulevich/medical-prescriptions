@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * The type Patient controller.
+ */
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
@@ -21,11 +24,22 @@ public class PatientController {
 
     private PatientService patientService;
 
+    /**
+     * Instantiates a new Patient controller.
+     *
+     * @param mapper         the mapper
+     * @param patientService the patient service
+     */
     public PatientController(Mapper mapper, PatientService patientService) {
         this.mapper = mapper;
         this.patientService = patientService;
     }
 
+    /**
+     * Gets all.
+     *
+     * @return the all
+     */
     @GetMapping
     public ResponseEntity<List<PatientResponseDto>> getAll() {
         final List<Patient> patients = patientService.findAll();
@@ -35,6 +49,12 @@ public class PatientController {
         return new ResponseEntity<>(patientResponseDtoList, HttpStatus.OK);
     }
 
+    /**
+     * Gets one.
+     *
+     * @param id the id
+     * @return the one
+     */
     @GetMapping("/{id}")
     public ResponseEntity<PatientResponseDto> getOne(@PathVariable Long id) {
         final Patient patient = patientService.findById(id);
@@ -42,6 +62,12 @@ public class PatientController {
         return new ResponseEntity<>(patientResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Save response entity.
+     *
+     * @param patientRequestDto the patient request dto
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<PatientResponseDto> save(@RequestBody PatientRequestDto patientRequestDto) {
         patientRequestDto.setId(null);
@@ -50,6 +76,13 @@ public class PatientController {
         return new ResponseEntity<>(patientResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Update response entity.
+     *
+     * @param patientRequestDto the patient request dto
+     * @param id                the id
+     * @return the response entity
+     */
     @PutMapping("/{id}")
     public ResponseEntity<PatientResponseDto> update(@RequestBody PatientRequestDto patientRequestDto, @PathVariable Long id) {
         if (!Objects.equals(id, patientRequestDto.getId()))
@@ -59,6 +92,11 @@ public class PatientController {
         return new ResponseEntity<>(patientResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Delete.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable Long id) {
