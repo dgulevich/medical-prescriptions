@@ -97,9 +97,6 @@ public class AuthenticationController {
                 .map(roleService::findByName)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
-        Set<Role> role1 = new HashSet<>();
-        role1.add(roleService.findByName("ROLE_USER"));
-        user.setRoles(role1);
         user.setRoles(roles);
         return userService.save(user);
     }
